@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Harshitha | Forever Yours</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@1,400;1,700&family=Montserrat:wght@200;400;600&display=swap');
+
+        :root {
+            --gold: #d4af37;
+            --bg-dark: #050505;
+            --glass: rgba(255, 255, 255, 0.04);
+            --accent-pink: #ffafcc;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            background: var(--bg-dark);
+            color: #fff;
+            font-family: 'Montserrat', sans-serif;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* --- Dynamic Emoji Nebula --- */
+        #bg-canvas { position: fixed; inset: 0; z-index: 1; opacity: 0.5; pointer-events: none; }
+
+        .stage {
+            position: relative;
+            z-index: 10;
+            width: 92%;
+            max-width: 440px;
+            background: var(--glass);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 40px;
+            padding: 40px 25px;
+            text-align: center;
+            box-shadow: 0 50px 100px rgba(0,0,0,0.9);
+            transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .screen { display: none; opacity: 0; transform: translateY(20px); transition: 1s ease; }
+        .screen.active { display: block; opacity: 1; transform: translateY(0); }
+
+        /* --- Visuals --- */
+        .feature-img {
+            width: 100%;
+            border-radius: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .bear-anim { width: 100px; margin: 0 auto 15px; display: block; }
+
+        /* --- Typography --- */
+        h1 {
+            font-family: 'Bodoni Moda', serif;
+            font-size: 2.4rem;
+            color: var(--gold);
+            font-style: italic;
+            margin-bottom: 15px;
+            letter-spacing: -1px;
+        }
+
+        p { font-size: 0.95rem; line-height: 1.8; color: rgba(255,255,255,0.85); font-weight: 300; }
+
+        /* --- Interactive Elements --- */
+        .gift-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .gift-btn {
+            background: rgba(255,255,255,0.05);
+            padding: 20px;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .gift-btn:hover { border-color: var(--gold); background: rgba(212, 175, 55, 0.1); }
+
+        .btn-action {
+            background: var(--gold);
+            color: #000;
+            width: 100%;
+            padding: 18px;
+            border-radius: 100px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-top: 20px;
+        }
+
+        #no-btn {
+            background: transparent;
+            color: rgba(255,255,255,0.4);
+            border: none;
+            margin-top: 20px;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        /* --- Letter Styling --- */
+        .letter-text { text-align: left; font-size: 0.9rem; line-height: 2; height: 200px; overflow-y: auto; padding-right: 10px; }
+
+    </style>
+</head>
+<body>
+
+<canvas id="bg-canvas"></canvas>
+
+<div class="stage" id="main-stage">
+    
+    <div class="screen active" id="s1">
+        <img class="bear-anim" src="Gemini_Generated_Image_lnq19hlnq19hlnq1.png" style="width: 200px; border-radius: 70%;">
+        <h1>Hi Harshitha,</h1>
+        <p>I wanted to create something as unique as you. A place where I can tell you what's really in my heart.</p>
+        <button class="btn-action" onclick="show(2)">Open My World</button>
+    </div>
+
+    <div class="screen" id="s2">
+        <h1>Gifts for You</h1>
+        <p>Every small memory we have is a treasure to me. Which one do you want to explore?</p>
+        <div class="gift-box">
+            <div class="gift-btn" onclick="show(3)"><span>🧠</span>Our Quiz</div>
+            <div class="gift-btn" onclick="show(4)"><span>✍️</span>The Letter</div>
+            <div class="gift-btn" onclick="show(5)" style="grid-column: span 2;"><span>❤️</span>The Big Surprise</div>
+        </div>
+    </div>
+
+    <div class="screen" id="s3">
+        <h1>Memory Quiz</h1>
+        <p>What is the one thing about us that makes me the happiest?</p>
+        <div style="margin-top:20px;">
+            <button class="btn-action" style="background:rgba(255,255,255,0.1); color:#fff; margin-bottom:10px;" onclick="quizAns('That you are my best friend.')">Our deep talks</button>
+            <button class="btn-action" style="background:rgba(255,255,255,0.1); color:#fff; margin-bottom:10px;" onclick="quizAns('That I get to see you every day.')">Our shared laughs</button>
+            <p id="quiz-msg" style="margin-top:15px; color:var(--gold); font-style:italic;"></p>
+        </div>
+        <button id="no-btn" onclick="show(2)">Back to Menu</button>
+    </div>
+
+    <div class="screen" id="s4">
+        <h1>To My Everything</h1>
+        <div class="letter-text">
+            <p>Dearest Harshitha,</p><br>
+            <p>I’ve realized that the best part of my life isn't a place or a dream—it's you. Being your best friend has been an honor, but I want to be so much more.</p><br>
+            <p>I want to be the one who respects you, protects your smile, and holds your hand through every high and low. You are my home.</p>
+        </div>
+        <button class="btn-action" onclick="show(2)">Return</button>
+    </div>
+
+    <div class="screen" id="s5">
+        <img class="feature-img" src="Gemini_Generated_Image_s9r0kas9r0kas9r0.png" style="width: 200px; border-radius: 70%;" alt="Proposal">
+        <h1>Be Mine?</h1>
+        <p>Will you give me the chance to love you forever? Will you be my Valentine?</p>
+        <button class="btn-action" onclick="celebrate()">YES, I WILL! ❤️</button>
+        <button id="no-btn" onmouseover="dodge()" onclick="dodge()">No</button>
+        <div id="no-plea" style="margin-top:15px; font-size: 0.8rem; color:#ff7675; opacity:0;">Nii istam ika, poo veyy😌! hey hey Please okasari alochinchu please🙏😜😄</div>
+    </div>
+
+    <div class="screen" id="s6">
+        <img class="bear-anim" src="bubududu.webp" style="width: 200px; border-radius: 70%;">
+        <h1>Forever Started.</h1>
+        <p>You’ve just made me the happiest person in the world. I love you beyond words, Harshitha. ❤️</p>
+    </div>
+</div>
+
+<script>
+    // --- BACKGROUND ENGINE ---
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+    const icons = ['❤️','🥰','😍','💕','🫰','🫶','🫂','🩷','💌','🏩','💐','❤️‍🔥','💓','💜','🌹','💘'];
+    let particles = [];
+
+    function init() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+    class Particle {
+        constructor() { this.reset(); this.y = Math.random()*canvas.height; }
+        reset() { this.x = Math.random()*canvas.width; this.y = canvas.height + 50; this.e = icons[Math.floor(Math.random()*icons.length)]; this.s = Math.random()*20+10; this.v = Math.random()*1+0.4; this.o = Math.random()*0.3; }
+        update() { this.y -= this.v; if(this.y < -50) this.reset(); }
+        draw() { ctx.globalAlpha = this.o; ctx.font = `${this.s}px serif`; ctx.fillText(this.e, this.x, this.y); }
+    }
+    for(let i=0; i<35; i++) particles.push(new Particle());
+    function animate() { ctx.clearRect(0,0,canvas.width,canvas.height); particles.forEach(p=>{p.update(); p.draw();}); requestAnimationFrame(animate); }
+    init(); animate(); window.onresize = init;
+
+    // --- NAVIGATION LOGIC ---
+    function show(id) {
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById('s' + id).classList.add('active');
+    }
+
+    function quizAns(msg) {
+        document.getElementById('quiz-msg').innerText = msg + " But mostly, it's just being with you.";
+    }
+
+    function dodge() {
+        const btn = document.getElementById('no-btn');
+        document.getElementById('no-plea').style.opacity = '1';
+        btn.style.position = 'fixed';
+        btn.style.left = Math.random() * (window.innerWidth - 100) + 'px';
+        btn.style.top = Math.random() * (window.innerHeight - 50) + 'px';
+    }
+
+    function celebrate() {
+        show(6);
+        for(let i=0; i<100; i++) particles.push(new Particle());
+    }
+</script>
+
+</body>
+</html>
